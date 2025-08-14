@@ -14,14 +14,17 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     use HasApiTokens;
 
+        protected $table = 'st_client';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'first_name',
+        'last_name',
+        'email_address',
         'password',
     ];
 
@@ -47,4 +50,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
 }

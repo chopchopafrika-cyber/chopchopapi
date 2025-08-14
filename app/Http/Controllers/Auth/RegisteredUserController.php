@@ -14,14 +14,16 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email_address' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email_address' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
@@ -33,7 +35,7 @@ class RegisteredUserController extends Controller
         return response()->json([
             'message' => 'User registration successful',
             'access_token' => $token,
-            'username' => $user->name
+            'username' => $user->first_name . ' ' . $user->last_name,
         ], 201);
     }
 }
